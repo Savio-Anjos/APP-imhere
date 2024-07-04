@@ -1,9 +1,27 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { styles } from "./styles";
 import { Participant } from "../../components/Participant";
 
 export function Home() {
+  const participants = [
+    "Rodrigo",
+    "Vini",
+    "Diego",
+    "Biro",
+    "Ana",
+    "Isa",
+    "Jack",
+    "Mayke",
+    "João",
+  ];
+
   function handleParticipantAdd() {
     console.log("Você clicou no botão de Adricionar!");
   }
@@ -28,10 +46,16 @@ export function Home() {
         </TouchableOpacity>
         <StatusBar style="auto" />
       </View>
-      <Participant
-        name="Savio"
-        onRemove={() => handleParticipantRemove("Savio")}
-      />
+
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        {participants.map((participant) => (
+          <Participant
+            key={participant}
+            name={participant}
+            onRemove={() => handleParticipantRemove(participant)}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }
