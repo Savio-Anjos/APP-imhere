@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  ScrollView,
+  Alert,
+  FlatList,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import { Participant } from "../../components/Participant";
 
 export function Home() {
   const participants = [
+    "Pedro",
     "Rodrigo",
     "Vini",
     "Diego",
@@ -20,14 +22,30 @@ export function Home() {
     "Jack",
     "Mayke",
     "João",
+    "Paulo",
   ];
 
   function handleParticipantAdd() {
-    console.log("Você clicou no botão de Adricionar!");
+    if (participants.includes("Rodrigo")) {
+      Alert.alert(
+        "Participante existe",
+        "Ja existe um participante na lista com esse nome!"
+      );
+      return;
+    }
   }
 
   function handleParticipantRemove(name: string) {
-    console.log(`Você clicou em deletar o participante ${name}!`);
+    Alert.alert("Remover", `Remover o participante ${name}?`, [
+      {
+        text: "Sim",
+        onPress: () => Alert.alert("Deletado!"),
+      },
+      {
+        text: "Não",
+        style: "cancel",
+      },
+    ]);
   }
 
   return (
@@ -44,18 +62,26 @@ export function Home() {
         <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
-        <StatusBar style="auto" />
       </View>
 
-      <ScrollView showsHorizontalScrollIndicator={false}>
-        {participants.map((participant) => (
+      <FlatList
+        data={participants}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
           <Participant
-            key={participant}
-            name={participant}
-            onRemove={() => handleParticipantRemove(participant)}
+            key={item}
+            name={item}
+            onRemove={() => handleParticipantRemove(item)}
           />
-        ))}
-      </ScrollView>
+        )}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <Text style={styles.listEmptyText}>
+            Nenhum participante chegou no evento ainda? Adicione participantes a
+            sua lista de presença.
+          </Text>
+        )}
+      />
     </View>
   );
 }
