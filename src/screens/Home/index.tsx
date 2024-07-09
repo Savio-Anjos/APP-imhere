@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
   Alert,
   FlatList,
@@ -11,28 +11,18 @@ import { styles } from "./styles";
 import { Participant } from "../../components/Participant";
 
 export function Home() {
-  const participants = [
-    "Pedro",
-    "Rodrigo",
-    "Vini",
-    "Diego",
-    "Biro",
-    "Ana",
-    "Isa",
-    "Jack",
-    "Mayke",
-    "João",
-    "Paulo",
-  ];
+  const [participants, setParticipants] = useState(["João"]);
 
   function handleParticipantAdd() {
     if (participants.includes("Rodrigo")) {
-      Alert.alert(
+      return Alert.alert(
         "Participante existe",
         "Ja existe um participante na lista com esse nome!"
       );
-      return;
     }
+
+    setParticipants((prevState) => [...prevState, "Ana"]);
+    console.log(participants);
   }
 
   function handleParticipantRemove(name: string) {
