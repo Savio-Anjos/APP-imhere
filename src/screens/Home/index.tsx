@@ -24,7 +24,6 @@ export function Home() {
 
     setParticipants((prevState) => [...prevState, participantName]);
     setParticipantName("");
-    console.log(participants);
   }
 
   function handleParticipantRemove(name: string) {
